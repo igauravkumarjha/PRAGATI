@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Human Heart Simulation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e3f2fd;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      background-color: #1565c0;
+      color: white;
+      padding: 20px;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    .simulation-container {
+      margin-top: 30px;
+    }
+
+    .simulation-btn {
+      background-color: #1976d2;
+      color: white;
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .simulation-btn:hover {
+      background-color: #0d47a1;
+    }
+
+    .heart-container {
+      position: relative;
+      width: 260px;
+      height: 260px;
+      margin: 0 auto;
+      background-color: #ff8a80;
+      border-radius: 50%;
+      border: 5px solid #1565c0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .heart-container.beating {
+      animation: heartbeat 1s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .chamber {
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+    }
+
+    .left-chamber {
+      background-color: #e53935;
+      left: 10px;
+      top: 40px;
+    }
+
+    .right-chamber {
+      background-color: #b71c1c;
+      right: 10px;
+      top: 40px;
+    }
+
+    .left-atrium, .right-atrium {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      top: 10px;
+      border-radius: 50%;
+      background-color: #ef9a9a;
+    }
+
+    .left-atrium {
+      left: 40px;
+    }
+
+    .right-atrium {
+      right: 40px;
+    }
+
+    .label {
+      position: absolute;
+      background: white;
+      padding: 2px 6px;
+      font-size: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .label.la { top: -10px; left: 30px; }
+    .label.ra { top: -10px; right: 30px; }
+    .label.lv { bottom: -20px; left: 20px; }
+    .label.rv { bottom: -20px; right: 20px; }
+
+    .artery, .vein {
+      position: absolute;
+      width: 20px;
+      height: 100px;
+      background-color: #1565c0;
+      border-radius: 10px;
+    }
+
+    .artery {
+      top: -70px;
+      left: 120px;
+    }
+
+    .vein {
+      bottom: -70px;
+      left: 120px;
+      background-color: #00bcd4;
+    }
+
+    .blood {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: red;
+      opacity: 0;
+    }
+
+    .blood.animate {
+      animation: bloodFlow 2s linear infinite;
+    }
+
+    @keyframes bloodFlow {
+      0% { top: 20%; opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Human Heart Simulation</h1>
+  </header>
+
+  <main class="simulation-container">
+    <p>Click the button to simulate heartbeat and blood circulation in the human heart.</p>
+    <button class="simulation-btn" onclick="toggleHeart()">Start / Stop Heartbeat</button>
+
+    <div class="heart-container" id="heart">
+      <!-- Chambers -->
+      <div class="chamber left-chamber"></div>
+      <div class="chamber right-chamber"></div>
+      
+      <!-- Atriums -->
+      <div class="left-atrium"></div>
+      <div class="right-atrium"></div>
+
+      <!-- Labels -->
+      <div class="label la">Left Atrium</div>
+      <div class="label ra">Right Atrium</div>
+      <div class="label lv">Left Ventricle</div>
+      <div class="label rv">Right Ventricle</div>
+
+      <!-- Artery & Vein -->
+      <div class="artery"></div>
+      <div class="vein"></div>
+
+      <!-- Blood drops -->
+      <div class="blood" id="blood1"></div>
+      <div class="blood" id="blood2"></div>
+    </div>
+  </main>
+
+  <script>
+    let isBeating = false;
+    const heart = document.getElementById('heart');
+    const blood1 = document.getElementById('blood1');
+    const blood2 = document.getElementById('blood2');
+
+    function toggleHeart() {
+      isBeating = !isBeating;
+      heart.classList.toggle('beating');
+
+      if (isBeating) {
+        blood1.classList.add('animate');
+        blood2.classList.add('animate');
+        blood1.style.left = "60px";
+        blood2.style.left = "160px";
+        blood1.style.backgroundColor = "#f44336"; // Oxygenated
+        blood2.style.backgroundColor = "#2196f3"; // Deoxygenated
+      } else {
+        blood1.classList.remove('animate');
+        blood2.classList.remove('animate');
+      }
+    }
+  </script>
+</body>
+</html>

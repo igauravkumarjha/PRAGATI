@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Physics Simulations - Pragati</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f5;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    h1 {
+      padding: 20px;
+      background: #4a90e2;
+      color: white;
+      margin-bottom: 0;
+    }
+    section {
+      padding: 30px 10px;
+      margin-bottom: 30px;
+      background: #fff;
+      border-bottom: 2px solid #ddd;
+    }
+    canvas {
+      border: 1px solid #333;
+      margin-top: 15px;
+    }
+    .controls {
+      margin-top: 10px;
+    }
+    label, input, button {
+      margin: 5px;
+      font-size: 16px;
+    }
+    button {
+      padding: 6px 12px;
+      background-color: #007acc;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Physics Simulations - Pragati</h1>
+
+  <!-- Projectile Motion -->
+  <section>
+    <h2>Projectile Motion</h2>
+    <div class="controls">
+      <label>Velocity (m/s): <input type="number" id="v0" value="30"></label>
+      <label>Angle (deg): <input type="number" id="angle" value="45"></label>
+      <button onclick="startProjectile()">Start</button>
+    </div>
+    <canvas id="projectileCanvas" width="600" height="300"></canvas>
+  </section>
+
+  <!-- Ohm's Law -->
+  <section>
+    <h2>Ohm's Law</h2>
+    <div class="controls">
+      <label>Voltage (V): <input type="number" id="voltage" value="10"></label>
+      <label>Resistance (Ω): <input type="number" id="resistance" value="5"></label>
+      <button onclick="calculateCurrent()">Calculate</button>
+    </div>
+    <canvas id="ohmCanvas" width="400" height="200"></canvas>
+  </section>
+
+  <!-- Simple Pendulum -->
+  <section>
+    <h2>Simple Pendulum</h2>
+    <div class="controls">
+      <label>Length (m): <input type="number" id="length" value="2"></label>
+      <label>Angle (deg): <input type="number" id="theta" value="30"></label>
+      <label>Damping: <input type="number" id="damping" value="0.01" step="0.01"></label>
+      <button onclick="startPendulum()">Start</button>
+    </div>
+    <canvas id="pendulumCanvas" width="400" height="300"></canvas>
+  </section>
+
+  <script>
+    // ==== Projectile Motion ====
+    const projCanvas = document.getElementById("projectileCanvas");
+    const projCtx = projCanvas.getContext("2d");
+    let projTimer;
+
+    function startProjectile() {
+      clearInterval(projTimer);
+      let v0 = parseFloat(document.getElementById("v0").value);
+      let angle = parseFloat(document.getElementById("angle").value) * Math.PI / 180;
+      let g = 9.81, time = 0, dt = 0.05;
+      let vx = v0 * Math.cos(angle);
+      let vy = v0 * Math.sin(angle);
+
+      projCtx.clearRect(0, 0, projCanvas.width, projCanvas.height);
+
+      projTimer = setInterval(() => {
+        let x = vx * time;
+        let y = vy * time - 0.5 * g * time * time;
+
+        projCtx.clearRect(0, 0, projCanvas.width, projCanvas.height);
+        projCtx.fillStyle = "green";
+        projCtx.fillRect(0, projCanvas.height - 10, projCanvas.width, 10);
+
+        if (y < 0) {
+          clearInterval(projTimer);
+          return;
+        }
+
+        projCtx.beginPath();
+        projCtx.arc(50 + x, projCanvas.height - (y + 10), 10, 0, 2 * Math.PI);
+        projCtx.fillStyle = "red";
+        projCtx.fill();
+
+        time += dt;
+      }, 30);
+    }
+
+    // ==== Ohm's Law ====
+    const ohmCanvas = document.getElementById("ohmCanvas");
+    const ohmCtx = ohmCanvas.getContext("2d");
+
+    function calculateCurrent() {
+      const V = parseFloat(document.getElementById("voltage").value);
+      const R = parseFloat(document.getElementById("resistance").value);
+      const I = V / R;
+
+      ohmCtx.clearRect(0, 0, ohmCanvas.width, ohmCanvas.height);
+      ohmCtx.font = "18px Arial";
+      ohmCtx.fillText(`V = ${V} V`, 20, 30);
+      ohmCtx.fillText(`R = ${R} Ω`, 20, 60);
+      ohmCtx.fillText(`I = ${I.toFixed(2)} A`, 20, 100);
+
+      ohmCtx.fillStyle = "black";
+      ohmCtx.beginPath();
+      ohmCtx.moveTo(150, 80);
+      ohmCtx.lineTo(180, 80);
+      ohmCtx.stroke();
+      ohmCtx.fillText("[Resistor]", 185, 85);
+    }
+
+    // ==== Pendulum ====
+    const pendulumCanvas = document.getElementById("pendulumCanvas");
+    const pctx = pendulumCanvas.getContext("2d");
+    let theta = Math.PI / 6, omega = 0, damping = 0.01, L = 2, pTimer;
+
+    function startPendulum() {
+      clearInterval(pTimer);
+      L = parseFloat(document.getElementById("length").value);
+      theta = parseFloat(document.getElementById("theta").value) * Math.PI / 180;
+      damping = parseFloat(document.getElementById("damping").value);
+      omega = 0;
+
+      let originX = pendulumCanvas.width / 2;
+      let originY = 20;
+      const g = 9.81;
+
+      pTimer = setInterval(() => {
+        pctx.clearRect(0, 0, pendulumCanvas.width, pendulumCanvas.height);
+        let bobX = originX + L * 80 * Math.sin(theta);
+        let bobY = originY + L * 80 * Math.cos(theta);
+
+        pctx.beginPath();
+        pctx.moveTo(originX, originY);
+        pctx.lineTo(bobX, bobY);
+        pctx.stroke();
+
+        pctx.beginPath();
+        pctx.arc(bobX, bobY, 10, 0, 2 * Math.PI);
+        pctx.fillStyle = "blue";
+        pctx.fill();
+
+        let alpha = -(g / L) * Math.sin(theta) - damping * omega;
+        omega += alpha * 0.05;
+        theta += omega * 0.05;
+      }, 30);
+    }
+  </script>
+</body>
+</html>

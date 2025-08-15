@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pragati's Chemistry Simulations</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef7fa;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #1565c0;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      background: #e3f2fd;
+      padding: 10px;
+    }
+    nav button {
+      padding: 10px 20px;
+      border: none;
+      background: #90caf9;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .section {
+      display: none;
+      padding: 20px;
+      text-align: center;
+    }
+    .active {
+      display: block;
+    }
+
+    /* Include styles for both simulators below */
+    .ph-scale {
+      width: 100%;
+      height: 40px;
+      background: linear-gradient(to right, red, yellow, green, blue);
+      border-radius: 20px;
+      margin-top: 20px;
+      position: relative;
+    }
+    .ph-indicator {
+      position: absolute;
+      top: 50%;
+      width: 10px;
+      height: 20px;
+      background-color: black;
+      transform: translateY(-50%);
+    }
+    .ph-value {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .liquid-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .substance {
+      padding: 10px;
+      border-radius: 10px;
+      color: white;
+      cursor: grab;
+    }
+    .acid { background: red; }
+    .neutral { background: green; }
+    .base { background: blue; }
+
+    /* Titration */
+    .lab {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 50px;
+      margin-top: 40px;
+    }
+    .burette {
+      width: 30px;
+      height: 300px;
+      border: 3px solid #333;
+      background: linear-gradient(to top, #90caf9 var(--level, 0%), transparent var(--level, 0%));
+    }
+    .drop {
+      width: 8px;
+      height: 8px;
+      background: blue;
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      left: 10px;
+      animation: drop 1s infinite;
+      display: none;
+    }
+    .flask {
+      width: 120px;
+      height: 80px;
+      border: 3px solid #333;
+      border-bottom-left-radius: 60px;
+      border-bottom-right-radius: 60px;
+      background: linear-gradient(to top, pink 50%, transparent 50%);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Pragati's Chemistry Simulations</h1>
+  </header>
+
+  <nav>
+    <button onclick="showSection('phSim')">pH Scale Simulation</button>
+    <button onclick="showSection('titrationSim')">Titration Simulator</button>
+  </nav>
+
+  <!-- pH SCALE SIM -->
+  <div class="section active" id="phSim">
+    <h2>Interactive pH Scale</h2>
+    <div class="ph-scale" id="phScale">
+      <div class="ph-indicator" id="phIndicator"></div>
+    </div>
+    <div class="ph-value" id="phValue">pH: 7 (Neutral)</div>
+    <input type="range" id="phSlider" min="0" max="14" step="0.1" value="7" />
+    <div class="liquid-container">
+      <div class="substance acid" draggable="true" id="tamarind" ondragstart="drag(event)">Tamarind<br>(pH ~3)</div>
+      <div class="substance neutral" draggable="true" id="freshWater" ondragstart="drag(event)">Water<br>(pH ~7)</div>
+      <div class="substance base" draggable="true" id="bakingSoda" ondragstart="drag(event)">Baking Soda<br>(pH ~9)</div>
+    </div>
+  </div>
+
+  <!-- TITRATION SIM -->
+  <div class="section" id="titrationSim">
+    <h2>Titration Simulation</h2>
+    <div class="lab">
+      <div class="burette" id="burette"><div class="drop" id="drop"></div></div>
+      <div class="flask" id="flask"></div>
+    </div>
+    <button onclick="startTitration()">Add Drops</button>
+    <div id="info">Click the button to start titration.</div>
+  </div>
+
+  <script>
+    // Section toggle logic
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    // pH SIM LOGIC
+    const phSlider = document.getElementById("phSlider");
+    const phIndicator = document.getElementById("phIndicator");
+    const phValue = document.getElementById("phValue");
+    const phScale = document.getElementById("phScale");
+
+    const substances = {
+      tamarind: 3,
+      freshWater: 7,
+      bakingSoda: 9,
+    };
+
+    function updatePhValue(value) {
+      const val = Math.min(Math.max(value, 0), 14);
+      const position = (val / 14) * phScale.offsetWidth;
+      phIndicator.style.left = `${position}px`;
+      let description = val < 7 ? "Acidic" : val > 7 ? "Basic" : "Neutral";
+      let color = val < 7 ? "red" : val > 7 ? "blue" : "green";
+      phValue.innerText = `pH: ${val.toFixed(1)} (${description})`;
+      phValue.style.color = color;
+    }
+
+    phSlider.addEventListener("input", (e) => {
+      updatePhValue(e.target.value);
+    });
+
+    function drag(ev) {
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    phScale.addEventListener("dragover", ev => ev.preventDefault());
+    phScale.addEventListener("drop", function (ev) {
+      ev.preventDefault();
+      const id = ev.dataTransfer.getData("text");
+      if (substances[id] !== undefined) updatePhValue(substances[id]);
+    });
+
+    updatePhValue(7);
+
+    // TITRATION SIM LOGIC
+    let level = 0;
+    let dropCount = 0;
+    let pH = 13;
+    const burette = document.getElementById('burette');
+    const flask = document.getElementById('flask');
+    const drop = document.getElementById('drop');
+    const info = document.getElementById('info');
+
+    function startTitration() {
+      drop.style.display = 'block';
+      const interval = setInterval(() => {
+        dropCount++;
+        level += 2;
+        pH -= 0.3;
+        if (level > 100) level = 100;
+        burette.style.setProperty('--level', `${level}%`);
+        let flaskColor = 'pink';
+        if (pH < 7) flaskColor = 'lightgray';
+        else if (pH < 8.5) flaskColor = 'lightpurple';
+        flask.style.background = `linear-gradient(to top, ${flaskColor} 50%, transparent 50%)`;
+        info.textContent = `Drops added: ${dropCount} | Estimated pH: ${pH.toFixed(1)}`;
+        if (pH <= 7) {
+          clearInterval(interval);
+          drop.style.display = 'none';
+          info.textContent += " → Neutralization Point Reached!";
+        }
+      }, 500);
+    }
+  </script>
+</body>
+</html>
