@@ -1,4 +1,4 @@
-🌟 PRAGATI – Virtual Science Lab
+🌟 PRAGATI – Virtual Science Lab Designeed for class k to 12 with proper authentication page of user 
 
 PRAGATI is an interactive virtual science laboratory designed to help students learn physics concepts through engaging simulations. It includes experiments like Pendulum Motion, Ohm's Law, Lens Image Formation, and Projectile Motion — all in one simple, user-friendly web application.
 
