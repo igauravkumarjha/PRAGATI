@@ -3,23 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard - Pragati Virtual Lab</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
     <header>
         <nav class="topnav">
+            <div class="logo">
+                <img src="logo.png" alt="Logo" class="nav-logo">
+                Pragati Virtual Lab
+                </div>
             <ul class="navbar">
+
+
                 <li><a href="#">Home</a></li>
                 <li><a href="#" id="servicesBtn">Services</a></li>
                 <li><a href="#">Contact</a></li>
-                <li><a href="index.html">Logout</a></li>
+                <li><a href="index.html" class="logout-btn">Logout</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="dashboard-main">
-        <h1>Welcome to Pragati Virtual Lab</h1>
-        <p>Start exploring your virtual lab simulations!</p>
+        <h1>Welcome to <span>Pragati Virtual Lab</span></h1>
+        <p>Start exploring your virtual lab simulations 🚀</p>
     </main>
 
     <!-- Service Modal -->
@@ -27,12 +33,34 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Select a Subject</h2>
-            <button class="subject-btn" onclick="window.location.href='biology.html'">Biology</button>
-            <button class="subject-btn" onclick="window.location.href='chemistry.html'">Chemistry</button>
-            <button class="subject-btn" onclick="window.location.href='physics.html'">Physics</button>
+            <div class="subjects">
+                <button class="subject-btn" onclick="window.location.href='biology.html'">Biology</button>
+                <button class="subject-btn" onclick="window.location.href='chemistry.html'">Chemistry</button>
+                <button class="subject-btn" onclick="window.location.href='physics.html'">Physics</button>
+            </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Modal open/close logic
+        const modal = document.getElementById("serviceModal");
+        const btn = document.getElementById("servicesBtn");
+        const span = document.querySelector(".close");
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>

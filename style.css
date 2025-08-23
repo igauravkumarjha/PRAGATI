@@ -1,146 +1,167 @@
-/* Login Page Styles */
-.login-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(120deg, #6dd5ed, #2193b0);
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* =========================
+   Auth Pages (Login / Signup)
+========================= */
+.auth-body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Dark gradient for contrast */
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.login-container {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    width: 300px;
-    text-align: center;
+.auth-container {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 40px 35px;
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  width: 350px;
+  animation: fadeIn 1s ease;
 }
 
-.login-container input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+.auth-container h1 {
+  color: #ffffff;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
 
-.login-container button {
-    width: 100%;
-    padding: 10px;
-    background-color: #2193b0;
-    border: none;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
+/* Inputs */
+.auth-container input {
+  width: 100%;
+  padding: 14px;
+  margin: 12px 0;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #222;
+  transition: all 0.3s ease;
 }
 
-.login-container button:hover {
-    background-color: #17647d;
+.auth-container input:focus {
+  box-shadow: 0 0 12px rgba(0, 191, 255, 0.9);
+  transform: scale(1.03);
 }
 
-/* Navbar for Dashboard */
-.topnav {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #2193b0;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+/* Buttons */
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #00b4db, #0083b0);
+  color: white;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  letter-spacing: 0.5px;
 }
 
-.navbar {
-    list-style-type: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px 0;
-    margin: 0;
+.btn-primary:hover {
+  background: linear-gradient(135deg, #0083b0, #00b4db);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 191, 255, 0.5);
 }
 
-.navbar li {
-    margin: 0 25px;
+/* Footer text */
+.auth-footer {
+  margin-top: 18px;
+  font-size: 14px;
+  color: #e6f7ff;
 }
 
-.navbar li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 16px;
+.auth-footer a {
+  color: #00e0ff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
 }
 
-.navbar li a:hover {
-    text-decoration: underline;
+.auth-footer a:hover {
+  color: #ffffff;
+  text-decoration: underline;
 }
 
-/* Dashboard content padding to avoid overlap */
-.dashboard-main {
-    padding-top: 100px;
-    text-align: center;
-    font-family: Arial, sans-serif;
+
+
+/* ====== Fancy Animated Buttons ====== */
+.btn {
+  position: relative;
+  display: inline-block;
+  padding: 12px 28px;
+  margin: 10px;
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  box-shadow: 0 8px 20px rgba(0, 114, 255, 0.4);
+  overflow: hidden;
+  transition: all 0.4s ease-in-out;
+  cursor: pointer;
 }
 
-h1 {
-    font-size: 2rem;
-    color: #2193b0;
+/* Ripple shine animation */
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: skewX(-25deg);
+  transition: 0.5s;
 }
 
-p {
-    font-size: 1.2rem;
+.btn:hover::before {
+  left: 120%;
 }
 
-/* Modal Styles */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.5);
+/* Hover effect */
+.btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 12px 25px rgba(0, 114, 255, 0.6);
 }
 
-.modal-content {
-    background-color: #fff;
-    margin: 10% auto;
-    padding: 30px;
-    border-radius: 10px;
-    width: 300px;
-    text-align: center;
-    position: relative;
+/* Secondary button (Signup) with different gradient */
+.btn.secondary {
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  box-shadow: 0 8px 20px rgba(255, 118, 147, 0.4);
 }
 
-.close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    font-weight: bold;
-    color: #aaa;
-    cursor: pointer;
+.btn.secondary:hover {
+  box-shadow: 0 12px 25px rgba(255, 118, 147, 0.6);
 }
 
-.close:hover {
-    color: #000;
+
+
+.decor-img {
+  display: block;
+  width: 100%;       /* Full width */
+  max-width: 100%;   /* Overflow na ho */
+  height: auto;      /* Aspect ratio maintain */
+  margin-top: 20px;  /* Buttons ke neeche spacing */
+  border-radius: 12px; /* Optional: rounded corners */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4); /* Optional shadow */
 }
 
-.subject-btn {
-    margin: 10px 0;
-    padding: 10px 20px;
-    background-color: #2193b0;
-    border: none;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-}
-
-.subject-btn:hover {
-    background-color: #17647d;
+.topnav .logo img.nav-logo {
+    width: 28px;               /* thoda bada for zoomed look */
+    height: 28px;
+    border-radius: 50%;        /* circle crop */
+    object-fit: cover;         /* zoomed-in effect */
+    object-position: center;   /* center focus */
+    margin-right: 8px;         /* text ke saath gap */
+    vertical-align: middle;    /* text ke center me align ho */
 }

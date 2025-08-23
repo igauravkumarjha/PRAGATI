@@ -1,0 +1,158 @@
+/* General */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #1E3C72, #2A5298);
+    color: #fff;
+    text-align: center;
+}
+
+/* Navbar */
+.topnav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px 40px;
+    backdrop-filter: blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.navbar {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.navbar li a:hover {
+    color: #FFD700;
+}
+
+/* Logout button */
+.logout-btn {
+    padding: 8px 15px;
+    border-radius: 6px;
+    background: #ff4b5c;
+    color: white !important;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    background: #e60026;
+}
+
+/* Dashboard Main */
+.dashboard-main {
+    margin-top: 80px;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+.dashboard-main h1 {
+    font-size: 36px;
+}
+
+.dashboard-main span {
+    color: #FFD700;
+}
+
+.dashboard-main p {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(6px);
+    background: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background: white;
+    color: #333;
+    margin: 12% auto;
+    padding: 30px;
+    border-radius: 12px;
+    width: 350px;
+    animation: slideDown 0.5s ease;
+}
+
+.close {
+    float: right;
+    font-size: 22px;
+    cursor: pointer;
+    color: #333;
+}
+
+.close:hover {
+    color: red;
+}
+
+/* Subject Buttons */
+.subjects {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.subject-btn {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #2A5298;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.subject-btn:hover {
+    background: #1E3C72;
+    transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+
+/* ===== Dashboard Logo Image ===== */
+.topnav .logo img.nav-logo {
+    width: 24px;          /* chhota size, adjust karo agar aur chhota chahiye */
+    height: 24px;
+    border-radius: 50%;   /* circle crop */
+    object-fit: cover;    /* image stretch avoid kare */
+    margin-right: 8px;    /* text ke saath gap */
+    vertical-align: middle; /* text ke center me align ho */
+}
